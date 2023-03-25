@@ -86,23 +86,24 @@
 
 
     <ImageView
-        android:id="@+id/favourite"
+        android:id="@+id/like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/common_spacing"
         android:contentDescription="@string/description_favourite"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrierEndContent"
+        app:layout_constraintTop_toBottomOf="@id/barrierEndContent"
         app:srcCompat="@drawable/baseline_favorite_border_24" />
 
     <TextView
-        android:id="@+id/favouriteCount"
+        android:id="@+id/likeCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/common_spacing"
         android:layout_marginVertical="@dimen/common_spacing"
-        app:layout_constraintStart_toEndOf="@+id/favourite"
-        app:layout_constraintTop_toBottomOf="@+id/barrierEndContent"
+        app:layout_constraintBottom_toBottomOf="@id/like"
+        app:layout_constraintStart_toEndOf="@id/like"
+        app:layout_constraintTop_toTopOf="@id/like"
         tools:text="@sample/posts.json/data/favourite" />
 
 
@@ -110,11 +111,12 @@
         android:id="@+id/share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/common_spacing"
         android:layout_marginHorizontal="@dimen/common_spacing"
+        android:layout_marginVertical="@dimen/common_spacing"
         android:contentDescription="@string/description_share"
-        app:layout_constraintStart_toEndOf="@+id/favouriteCount"
-        app:layout_constraintTop_toBottomOf="@+id/barrierEndContent"
+        app:layout_constraintBottom_toBottomOf="@id/likeCount"
+        app:layout_constraintStart_toEndOf="@id/likeCount"
+        app:layout_constraintTop_toTopOf="@id/likeCount"
         app:srcCompat="@drawable/baseline_share_24" />
 
     <TextView
@@ -123,36 +125,32 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/common_spacing"
         android:layout_marginVertical="@dimen/common_spacing"
-        app:layout_constraintStart_toEndOf="@+id/share"
-        app:layout_constraintTop_toBottomOf="@+id/barrierEndContent"
+        app:layout_constraintBottom_toBottomOf="@id/share"
+        app:layout_constraintStart_toEndOf="@id/share"
+        app:layout_constraintTop_toTopOf="@id/share"
         tools:text="@sample/posts.json/data/share" />
 
     <TextView
         android:id="@+id/viewCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
         android:layout_marginVertical="@dimen/common_spacing"
+        app:layout_constraintBottom_toBottomOf="@id/view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrierEndContent"
+        app:layout_constraintTop_toTopOf="@id/view"
         tools:text="@sample/posts.json/data/view" />
 
     <ImageView
         android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/common_spacing"
         android:layout_marginHorizontal="@dimen/common_spacing"
+        android:layout_marginVertical="@dimen/common_spacing"
         android:contentDescription="@string/description_view"
-        app:layout_constraintEnd_toStartOf="@+id/viewCount"
-        app:layout_constraintTop_toBottomOf="@+id/barrierEndContent"
+        app:layout_constraintBottom_toBottomOf="@id/shareCount"
+        app:layout_constraintEnd_toStartOf="@id/viewCount"
+        app:layout_constraintTop_toTopOf="@id/shareCount"
         app:srcCompat="@drawable/baseline_remove_red_eye_24" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        app:layout_constraintTop_toBottomOf="@+id/favouriteCount"
-        android:layout_marginVertical="@dimen/common_spacing"
-        android:background="#FF0000" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
