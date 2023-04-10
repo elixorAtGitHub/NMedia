@@ -12,4 +12,6 @@
     <string name="description_post_like">Отправить комментарий</string>
     <string name="empty_post_error">Сообщение не может быть пустым</string>
     <string name="edit">Редактировать</string>
+    <string name="cancel">Отменить редактирование</string>
+    <string name="edit_message">Отредактировать</string>
 </resources>
