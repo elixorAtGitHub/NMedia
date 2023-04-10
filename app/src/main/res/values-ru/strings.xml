@@ -7,4 +7,9 @@
     <string name="description_favourite">Нравится</string>
     <string name="description_share">Поделились</string>
     <string name="description_view">Просмотров</string>
+    <string name="remove">Удалить</string>
+    <string name="content_hint">Комментарий</string>
+    <string name="description_post_like">Отправить комментарий</string>
+    <string name="empty_post_error">Сообщение не может быть пустым</string>
+    <string name="edit">Редактировать</string>
 </resources>

@@ -6,4 +6,9 @@
     <string name="description_favourite">Favourite</string>
     <string name="description_share">Share</string>
     <string name="description_view">View</string>
+    <string name="remove">Remove</string>
+    <string name="description_post_like">Comment</string>
+    <string name="empty_post_error">Content must not be empty</string>
+    <string name="edit">Edit</string>
+    <string name="content_hint">Content</string>
 </resources>
