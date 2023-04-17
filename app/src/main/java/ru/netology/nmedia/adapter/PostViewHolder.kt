@@ -17,21 +17,20 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            like.setImageResource(
-                if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
-            )
+            like.isChecked = post.likedByMe
+            //like.text = post.likes.toString()
             viewCount.text = countTransformation(post.views)
 
             like.setOnClickListener {
                 listener.onLike(post)
             }
-            likeCount.text = countTransformation(post.likes)
+            like.text = countTransformation(post.likes)
 
 
             share.setOnClickListener {
                 listener.onShare(post)
             }
-            shareCount.text = countTransformation(post.shares)
+            share.text = countTransformation(post.shares)
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
