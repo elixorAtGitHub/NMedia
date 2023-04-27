@@ -1,5 +1,6 @@
 package ru.netology.nmedia.adapter
 
+import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.netology.nmedia.R
@@ -16,9 +17,22 @@ class PostViewHolder(
         with(binding) {
             author.text = post.author
             published.text = post.published
+
+            if (post.video == null) {                           //отображаем блок видео если ссылка не пустая
+                video.visibility = View.GONE
+            }
+
+
+            movie.setOnClickListener {
+                listener.onVideo(post)
+            }
+
+            play.setOnClickListener {
+                listener.onVideo(post)
+            }
+
             content.text = post.content
             like.isChecked = post.likedByMe
-            //like.text = post.likes.toString()
             viewCount.text = countTransformation(post.views)
 
             like.setOnClickListener {
@@ -35,7 +49,7 @@ class PostViewHolder(
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.post_options)
-                    setOnMenuItemClickListener {item ->
+                    setOnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.remove -> {
                                 listener.onRemove(post)
@@ -50,7 +64,6 @@ class PostViewHolder(
                     }
                 }.show()
             }
-
 
 
         }

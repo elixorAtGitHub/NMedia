@@ -11,7 +11,13 @@
     <string name="content_hint">Комментарий</string>
     <string name="description_post_like">Отправить комментарий</string>
     <string name="empty_post_error">Сообщение не может быть пустым</string>
+    <string name="error_empty_content">Контент не может быть пустым</string>
     <string name="edit">Редактировать</string>
     <string name="cancel">Отменить редактирование</string>
     <string name="edit_message">Отредактировать</string>
+    <string name="chooser_share_post">Поделиться</string>
+    <string name="description_post_video">Видео</string>
+    <string name="description_button_play">Смотреть</string>
+    <string name="button_save">Сохранить</string>
+    <string name="button_add">Добавить</string>
 </resources>

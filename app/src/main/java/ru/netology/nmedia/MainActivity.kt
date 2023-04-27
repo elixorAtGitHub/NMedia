@@ -1,15 +1,14 @@
 package ru.netology.nmedia
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.adapter.PostListener
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.utils.AndroidUtils
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +20,12 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
 
+        val newPostContract = registerForActivityResult(NewPostActivity.Contract) {result ->            // 1 - регистрируем контракт
+            result ?: return@registerForActivityResult
+            viewModel.changeContent(result)
+            viewModel.save()
+        }
+
         val adapter = PostAdapter(
             object: PostListener {
                 override fun onRemove(post: Post) {
@@ -28,66 +33,29 @@ class MainActivity : AppCompatActivity() {
                 }
                 override fun onEdit(post: Post) {
                     viewModel.edit(post)
+                    newPostContract.launch(post.content)                                                // 2 - вызываем лаунч
                 }
                 override fun onShare(post: Post) {
+                    val intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, post.content)
+                        type = "text/plain"
+                    }
+                    val startIntent = Intent.createChooser(intent, getString(R.string.chooser_share_post))
+                    startActivity(startIntent)
+
                     viewModel.share(post.id)
                 }
                 override fun onLike(post: Post) {
                     viewModel.likeById(post.id)
                 }
+
+                override fun onVideo(post: Post) {
+                    val videoIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
+                    startActivity(videoIntent)
+                }
             }
         )
-
-        viewModel.edited.observe(this) {
-            if (it.id == 0L) {
-
-
-
-                return@observe
-            }
-
-            binding.editGroup.visibility = View.VISIBLE
-            binding.content.requestFocus()
-            binding.content.setText(it.content)
-            binding.authorEdit.text = it.author
-        }
-
-        binding.cancel.setOnClickListener {
-            with (binding.content) {
-
-                viewModel.clearEdit()
-
-                binding.editGroup.visibility = View.GONE
-                setText("")
-                clearFocus()
-                AndroidUtils.hideKeyboard(this)
-            }
-        }
-
-        binding.save.setOnClickListener {
-            with (binding.content) {
-
-
-                val content = text?.toString()
-                if (content.isNullOrBlank()) {
-                    Toast.makeText(
-                        this@MainActivity, 
-                        R.string.empty_post_error,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-
-                }
-
-                viewModel.changeContent(content)
-                viewModel.save()
-
-                setText("")
-                clearFocus()
-                binding.editGroup.visibility = View.GONE
-                AndroidUtils.hideKeyboard(this)
-            }
-        }
 
         binding.list.adapter = adapter
 
@@ -95,6 +63,9 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
+        binding.add.setOnClickListener {
+            newPostContract.launch("")
+        }
 
 
     }

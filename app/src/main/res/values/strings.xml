@@ -9,8 +9,14 @@
     <string name="remove">Remove</string>
     <string name="description_post_like">Comment</string>
     <string name="empty_post_error">Content must not be empty</string>
+    <string name="error_empty_content">Content can\'t be empty</string>
     <string name="edit">Edit</string>
     <string name="content_hint">Content</string>
     <string name="edit_message">Edit message</string>
     <string name="cancel">Cancel edit</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="description_post_video">Video</string>
+    <string name="description_button_play">Play</string>
+    <string name="button_save">Save</string>
+    <string name="button_add">Add</string>
 </resources>
