@@ -17,7 +17,7 @@ class NewPostActivity : AppCompatActivity() {
         binding.content.setText(intent?.getStringExtra(Intent.EXTRA_TEXT))   //записываем во view текст, который пришел к нам в intent'е
 
 
-        binding.ok.setOnClickListener {
+        binding.ok.setOnClickListener {                               //действия по нажатию на floatingButtom OK
             val text = binding.content.text.toString()
             //val url = binding.video.text.toString()
             if (text.isBlank()) {
@@ -27,7 +27,26 @@ class NewPostActivity : AppCompatActivity() {
             }
             finish()
         }
+
+        binding.bottomAppBar.setOnMenuItemClickListener {menuItem ->        //действия по нажатиям кнопок меню bottomAppBar'а - на данный момент дублеж кнопки OK
+            when (menuItem.itemId) {
+                R.id.cancel_edit_new_post -> {
+                    setResult(Activity.RESULT_CANCELED)
+                    finish()
+                    true
+                }
+                R.id.edit_new_post -> {
+                    val text = binding.content.text.toString()
+                    setResult(Activity.RESULT_OK, Intent().apply { putExtra(Intent.EXTRA_TEXT, text)})
+                    finish()
+                    true
+                }
+                else -> false
+            }
+        }
     }
+
+
 
     object Contract : ActivityResultContract<String, String?>() {
 

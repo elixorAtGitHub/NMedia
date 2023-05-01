@@ -54,6 +54,10 @@ class MainActivity : AppCompatActivity() {
                     val videoIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
                     startActivity(videoIntent)
                 }
+
+                override fun onResume(post: Post) {
+                    viewModel.clearEdit()
+                }
             }
         )
 

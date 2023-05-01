@@ -20,6 +20,8 @@ class PostViewHolder(
 
             if (post.video == null) {                           //отображаем блок видео если ссылка не пустая
                 video.visibility = View.GONE
+            } else {
+                video.visibility = View.VISIBLE
             }
 
 
