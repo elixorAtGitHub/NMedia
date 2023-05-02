@@ -12,18 +12,26 @@ import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
+    val viewModel: PostViewModel by viewModels()
+    override fun onResume() {
+        viewModel.clearEdit()
+        super.onResume()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        val viewModel: PostViewModel by viewModels()
-
         val newPostContract = registerForActivityResult(NewPostActivity.Contract) {result ->            // 1 - регистрируем контракт
-            result ?: return@registerForActivityResult
-            viewModel.changeContent(result)
-            viewModel.save()
+            //result ?: return@registerForActivityResult
+            if (result.isNullOrBlank()) {
+                    viewModel.clearEdit()
+                } else {
+                    result ?: return@registerForActivityResult
+                    viewModel.changeContent(result)
+                    viewModel.save()
+                }
         }
 
         val adapter = PostAdapter(
@@ -53,10 +61,6 @@ class MainActivity : AppCompatActivity() {
                 override fun onVideo(post: Post) {
                     val videoIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
                     startActivity(videoIntent)
-                }
-
-                override fun onResume(post: Post) {
-                    viewModel.clearEdit()
                 }
             }
         )
