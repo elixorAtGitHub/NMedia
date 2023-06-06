@@ -67,6 +67,10 @@ class PostViewHolder(
                 }.show()
             }
 
+            root.setOnClickListener {
+                listener.onDetailsPost(post)
+            }
+
 
         }
     }

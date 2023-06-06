@@ -1,38 +1,33 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.activity
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import ru.netology.nmedia.databinding.ActivityMainBinding
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.adapter.PostListener
+import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
-class MainActivity : AppCompatActivity() {
-    val viewModel: PostViewModel by viewModels()
-    override fun onResume() {
-        viewModel.clearEdit()
-        super.onResume()
-    }
+class FeedFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    private val viewModel: PostViewModel by activityViewModels()
 
-        val newPostContract = registerForActivityResult(NewPostActivity.Contract) {result ->            // 1 - регистрируем контракт
-            //result ?: return@registerForActivityResult
-            if (result.isNullOrBlank()) {
-                    viewModel.clearEdit()
-                } else {
-                    result ?: return@registerForActivityResult
-                    viewModel.changeContent(result)
-                    viewModel.save()
-                }
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        val binding = FragmentFeedBinding.inflate(layoutInflater, container, false)
 
         val adapter = PostAdapter(
             object: PostListener {
@@ -41,7 +36,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 override fun onEdit(post: Post) {
                     viewModel.edit(post)
-                    newPostContract.launch(post.content)                                                // 2 - вызываем лаунч
                 }
                 override fun onShare(post: Post) {
                     val intent = Intent().apply {
@@ -62,19 +56,33 @@ class MainActivity : AppCompatActivity() {
                     val videoIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
                     startActivity(videoIntent)
                 }
+
+                override fun onDetailsPost(post: Post) {
+                    findNavController().navigate(
+                        R.id.action_feedFragment_to_postDetailsFragment,
+                        bundleOf("postId" to post.id)
+                    )
+                }
             }
         )
 
         binding.list.adapter = adapter
 
-        viewModel.data.observe(this) { posts ->
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
         }
 
         binding.add.setOnClickListener {
-            newPostContract.launch("")
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
 
+        return binding.root
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.clearEdit()
+    }
+
 }

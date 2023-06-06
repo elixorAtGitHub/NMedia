@@ -6,16 +6,13 @@ import androidx.recyclerview.widget.ListAdapter
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 
-//typealias OnLikeClickListener = (Post) -> Unit
-//typealias OnShareClickListener = (Post) -> Unit
-//typealias OnRemoveClickListener = (Post) -> Unit
-
 interface PostListener {
     fun onRemove(post: Post)
     fun onEdit(post: Post)
     fun onShare(post: Post)
     fun onLike(post: Post)
     fun onVideo(post: Post)
+    fun onDetailsPost(post: Post)
 }
 
 class PostAdapter(

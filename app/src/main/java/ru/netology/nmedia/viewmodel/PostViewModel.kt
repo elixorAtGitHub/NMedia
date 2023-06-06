@@ -23,7 +23,7 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     fun share(id: Long) = repository.shareById(id)
     fun remove(id: Long) = repository.removeById(id)
 
-    val edited = MutableLiveData(empty)
+    private val edited = MutableLiveData(empty)
 
     fun save() {
         edited.value?.let {
