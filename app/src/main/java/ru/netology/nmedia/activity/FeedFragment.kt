@@ -36,6 +36,10 @@ class FeedFragment : Fragment() {
                 }
                 override fun onEdit(post: Post) {
                     viewModel.edit(post)
+                    findNavController().navigate(
+                        R.id.action_feedFragment_to_newPostFragment,
+                        bundleOf("textArg" to post.content)
+                    )
                 }
                 override fun onShare(post: Post) {
                     val intent = Intent().apply {

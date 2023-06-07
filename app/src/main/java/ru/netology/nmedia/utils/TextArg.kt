@@ -9,6 +9,6 @@ object TextArg : ReadWriteProperty<Bundle, String?> {
         thisRef.getString(property.name)
 
     override fun setValue(thisRef: Bundle, property: KProperty<*>, value: String?) {
-        thisRef.getString(property.name, value)
+        thisRef.putString(property.name, value)
     }
 }
