@@ -7,18 +7,20 @@ import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositorySQLiteImpl
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
+
+val currentDate: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
 private val empty = Post(
     id = 0,
-    author = "",
+    author = "Aleksandr S.",
     content = "",
-    published = "",
+    published =  currentDate,
     likedByMe = false
 )
 class PostViewModel(application: Application): AndroidViewModel(application) {
-    //private val repository: PostRepository = PostRepositoryInMemory(application)
-    //val data: LiveData<List<Post>> = repository.getAll()
-    //private val edited = MutableLiveData(empty)
     private val repository: PostRepository = PostRepositorySQLiteImpl(AppDb.getInstance(application).postDao)
     val data = repository.getAll()
     private val edited = MutableLiveData(empty)
